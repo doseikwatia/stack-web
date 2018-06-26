@@ -1,28 +1,6 @@
 <template>
   <div>
     <router-view/>
-      <v-card height="200px">
-    <v-bottom-nav
-      :value="true"
-      :active.sync="e2"
-      :color="color"
-      absolute
-      shift
-    >
-      <v-btn dark href="/#/auth/register">
-          <span>Register</span>
-          <v-icon>add</v-icon>
-      </v-btn>
-      <v-btn dark href="/#/auth/login">
-          <span>Login</span>
-          <v-icon>perm_identity</v-icon>
-      </v-btn>
-      <v-btn dark href="/#/auth/forgot">
-          <span>Recover</span>
-          <v-icon>undo</v-icon>
-      </v-btn>
-    </v-bottom-nav>
-  </v-card>
   </div>
 </template>
 
@@ -49,6 +27,15 @@ const Routes = [{
 export default{
   routes(){
     return Routes;
+  },
+  data(){
+    return{}
+  },
+  computed:{
+    currentPath(){
+      console.log(this.$router.path)
+      return this.$router.path
+    }
   }
 }
 </script>

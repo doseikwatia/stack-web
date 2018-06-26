@@ -51,7 +51,9 @@ export default {
     };
   },
   methods: {
-    submit() {},
+    submit() {
+      this.$store.dispatch('login',{username:this.email,password:this.password})
+    },
     clear() {
       this.email='';
       this.password='';
