@@ -1,0 +1,31 @@
+|| [
+          {
+            id: 1,
+
+            title: "Hello world",
+
+            progress: 20,
+            description: "description",
+            tasks: [
+              {
+                id: 0,
+
+                title: "This is 1 subtask",
+
+                progress: 40,
+                description: "description",
+                tasks: []
+              },
+
+              {
+                id: 2,
+
+                title: "This is 2 subtask",
+
+                progress: 80,
+                description: "description",
+                tasks: []
+              }
+            ]
+          }
+        ]

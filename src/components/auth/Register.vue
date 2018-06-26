@@ -1,7 +1,7 @@
 <template>
   <v-layout row justify-center   align-center>
     <v-flex xs3>
-      <v-form v-model="valid">
+      <v-form>
         <v-text-field v-model="email"
           :rules="emailRules"
           label="Username"
@@ -22,12 +22,12 @@
           required
         ></v-text-field>
         <v-text-field
-          v-model="password"
+          v-model="confirmpassword"
           prepend-icon="lock"
           :append-icon="e2 ? 'visibility' : 'visibility_off'"
           :append-icon-cb="() => (e2 = !e2)"
           :type="e2 ? 'password' : 'text'"
-          :rules="passwordRules"
+          :rules="confirmpasswordRules"
           name="input-10-1"
           label="Confirm password"
           hint="At least 8 characters"
@@ -35,7 +35,8 @@
           required
         ></v-text-field>
         <v-btn @click="clear">reset</v-btn>
-        <v-btn @click="submit">login</v-btn>
+        <v-btn @click="submit">register</v-btn>
+        <v-btn :to="{name:'Login'}">back</v-btn>
       </v-form>
     </v-flex>
   </v-layout>
@@ -48,6 +49,7 @@ export default {
     return {
       email: "",
       password: "",
+      confirmpassword:"",
       e1: true,
       e2: true,
       valid: false,
@@ -61,14 +63,21 @@ export default {
       ],
       passwordRules:[
         v=>/^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})/.test(v) || "Password must be strong enough"
-      ]
+      ],
+      confirmpasswordRules:[
+        v=>this.password==v || "Must match password",
+      ],
     };
   },
   methods: {
-    submit() {},
+    submit() {
+      this.$store.dispatch('register',{username:this.email,password:this.password})
+      this.$router.push({name:'Login'})
+    },
     clear() {
       this.email='';
       this.password='';
+      this.confirmpassword='';
     }
   }
 };
