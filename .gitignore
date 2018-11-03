@@ -15,3 +15,6 @@ selenium-debug.log
 *.ntvs*
 *.njsproj
 *.sln
+#ignore configuration because they are specific to the dev environment
+config/*
+build/*

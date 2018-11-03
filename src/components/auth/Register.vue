@@ -35,7 +35,8 @@
           required
         ></v-text-field>
         <v-btn @click="clear">reset</v-btn>
-        <v-btn @click="submit">login</v-btn>
+        <v-btn @click="submit">register</v-btn>
+        <v-btn :to="{name:'Login'}">back</v-btn>
       </v-form>
     </v-flex>
   </v-layout>
@@ -71,6 +72,7 @@ export default {
   methods: {
     submit() {
       this.$store.dispatch('register',{username:this.email,password:this.password})
+      this.$router.push({name:'Login'})
     },
     clear() {
       this.email='';

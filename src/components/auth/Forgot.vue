@@ -9,6 +9,7 @@
           required
           prepend-icon="account_box" ></v-text-field>
         <v-btn @click="submit">reset credentials</v-btn>
+        <v-btn :to="{name:'Login'}">back</v-btn>
       </v-form>
     </v-flex>
   </v-layout>
