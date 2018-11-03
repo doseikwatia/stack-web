@@ -23,24 +23,25 @@
         <v-toolbar-side-icon @click.stop="drawer = !drawer"></v-toolbar-side-icon>
         <span class="hidden-sm-and-down">Stack Web</span>
       </v-toolbar-title>
-      <v-text-field
+      <v-btn v-if="hasChnages" icon @click="save">
+        <v-icon>save</v-icon>
+      </v-btn>
+      <!-- <v-text-field
         flat
         solo-inverted
         prepend-icon="search"
         label="Search"
         class="hidden-sm-and-down"
-      ></v-text-field>
+      ></v-text-field> -->
       <v-spacer></v-spacer>
-      <v-btn v-if="hasChnages" icon @click="save">
-        <v-icon>save</v-icon>
-      </v-btn>
-      <v-btn icon>
+      <!-- <v-btn icon>
         <v-icon>notifications</v-icon>
-      </v-btn>
+      </v-btn> -->
       <v-menu offset-y>
         <v-btn icon large slot="activator">
-          <v-avatar size="32px" tile>
-            <img v-if="user" :src="user.photoURL">
+          <v-avatar size="32px" >
+            <img v-if="user && user.photoURL" :src="user.photoURL">
+            <img v-else src="/static/images/unknown_user.png">
           </v-avatar>
         </v-btn>
         <v-list>
@@ -53,15 +54,6 @@
     <v-content>
       <v-container fluid fill-height>
         <v-layout row wrap>
-          <v-flex xs6 offset-xs2>
-            <div v-if="currentProject">
-            <span class="overall-project-title">{{currentProject.name}}</span>
-            <v-progress-circular class="overall-project-progress" :size="40" :width="5" :value="currentProject.root.progress" :color="progressColor">
-              {{currentProject.root.progress }}
-            </v-progress-circular>
-            </div>
-          </v-flex>
-          <!-- Task List -->
           <v-flex  xs12>
             <router-view/>
           </v-flex>

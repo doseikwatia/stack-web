@@ -15,7 +15,7 @@
                             <!-- <v-subheader class="pl-0">Description</v-subheader> -->
                             <v-textarea v-model="description" required label="Description" ></v-textarea>
                         </v-flex>
-                        <v-flex xs4>
+                        <v-flex xs4 v-show="!task.tasks || task.tasks.length ==0">
                             <v-subheader class="pl-0">Progress</v-subheader>
                             <v-slider v-model="progress" thumb-label="always"></v-slider>
                         </v-flex>

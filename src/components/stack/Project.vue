@@ -15,10 +15,16 @@
             <v-icon color="red lighten-1">delete</v-icon>
           </v-btn>
         </v-list-tile-action>
+        <v-list-tile-action>
+          <v-progress-circular :size="30" :width="3" :value="project.root.progress" :color="progressColor">
+              {{project.root.progress }}
+          </v-progress-circular>
+        </v-list-tile-action>
     </v-list-tile>
 </template> 
 
 <script>
+import { progressColor } from "../../helpers";
 export const PJT_MODIFY = "modify";
 export const PJT_DELETE = "delete";
 export default {
@@ -30,6 +36,11 @@ export default {
       showactions: false,
       tmpProjectName:this.project.name,
     };
+  },
+  computed:{
+    progressColor: function(){
+       return progressColor(this.project.root.progress)
+    }
   },
   methods: {
     handleEditClicked: function(event) {

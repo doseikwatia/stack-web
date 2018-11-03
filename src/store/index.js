@@ -11,6 +11,7 @@ export let store = new Vuex.Store({
     firebaseApp: FirebaseApp,
     user:null,
     hasChanges:false,
+    errorMessage:""
   },
   mutations: {
     updateProjects(state, payload) {
@@ -72,6 +73,7 @@ export let store = new Vuex.Store({
       return state.projects.filter(p => p.id === projectID)[0]
     },
     hasChanges:(state)=>state.hasChanges,
+    errorMessage:(state)=>state.errorMessage,
   },
   actions: {
     addProject(context, payload){
@@ -85,46 +87,44 @@ export let store = new Vuex.Store({
       .then(function(){
         context.state.hasChanges=false
       })
+      .catch(error=>{
+        console.error(error)
+        context.state.errorMessage=error.message
+      })
     },
     loginWithUsernameAndPassword(context, payload) {
       //monitoring for changes on user
-      Auth.signInWithEmailAndPassword(payload.username, payload.password).then(function () {
-        if (!result.user) {
-          return;
-        }
-        context.commit('updateUser', result.user)
-        context.dispatch('loadProjects', Auth)
-      }).catch(error => {
+      Auth.signInWithEmailAndPassword(payload.username, payload.password).then(()=>{
+        context.state.errorMessage=""
+      })
+      .catch(error => {
         //TODO:alert user of error
-        console.error(error)
+        context.state.errorMessage=error.message
       })
     },
     loginWithGoogle(context, payload) {
-      Auth.signInWithPopup(GoogleAuthProvider).then(result => {
-        if (!result.user) {
-          return;
-        }
-        context.commit('updateUser', result.user)
-        context.dispatch('loadProjects', Auth)
+      Auth.signInWithPopup(GoogleAuthProvider).then(()=>{
+        context.state.errorMessage=""
       })
-        .catch(error => {
-          //TODO: alert user of error
-          console.error(error)
-        })
+      .catch(error => {
+        context.state.errorMessage=error.message
+      })
     },
     forgot(context, payload) {
-      Auth.sendPasswordResetEmail(payload.username).catch(error => {
-        //TODO:alert user of error
+      Auth.sendPasswordResetEmail(payload.username).then(()=>{
+        context.state.errorMessage=""
+      })
+      .catch(error => {
         console.error(error)
+        context.state.errorMessage=error.message
       })
     },
     register(context, payload) {
-      Auth.createUserWithEmailAndPassword(payload.username, payload.password).then(function () {
-        //updating current user obj
-        context.commit('updateUser', Auth.currentUser)
+      Auth.createUserWithEmailAndPassword(payload.username, payload.password).then(()=>{
+        context.state.errorMessage=""
       }).catch(error => {
-        //TODO:alert user of error
         console.error(error)
+        context.state.errorMessage=error.message
       })
     },
     signout(context) {
@@ -141,6 +141,10 @@ export let store = new Vuex.Store({
       //retrieving current projects from rt database
       DB.ref(userResourcePath).once('value').then(snap => {
         context.commit('updateProjects', { projects: snap.val() || [] })
+      })
+      .catch(error=>{
+        console.error(error)
+        context.state.errorMessage=error.message
       })
     },
   }
