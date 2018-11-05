@@ -7,17 +7,18 @@
             <v-card-text>
                 <v-container fluid grid-list-xs>
                     <v-layout column>
-                        <v-flex xs4>
-                            <!-- <v-subheader class="pl-0">Show thumb when using slider</v-subheader> -->
-                                <v-text-field v-model="title" required label="Title" counter :rules="[rules.lessThanOrEqualTo50Chars]"></v-text-field>
+                        <v-flex>
+                            <v-text-field v-model="title" required label="Title" counter :rules="[rules.lessThanOrEqualTo50Chars]"></v-text-field>
                         </v-flex>
-                        <v-flex xs4>
-                            <!-- <v-subheader class="pl-0">Description</v-subheader> -->
-                            <v-textarea v-model="description" required label="Description" ></v-textarea>
+                        <v-flex>
+                            <v-textarea v-model="description" required label="Description"></v-textarea>
                         </v-flex>
-                        <v-flex xs4 v-show="!task.tasks || task.tasks.length ==0">
+                        <v-flex v-show="!task.tasks || task.tasks.length ==0">
                             <v-subheader class="pl-0">Progress</v-subheader>
                             <v-slider v-model="progress" thumb-label="always"></v-slider>
+                        </v-flex>
+                        <v-flex>
+                          <v-datetime-picker v-show="!isNaN(dueDate.getTime())" label="Due date" v-model="dueDate"> </v-datetime-picker>
                         </v-flex>
                     </v-layout>
                 </v-container>
@@ -47,6 +48,7 @@ export default {
       title: "",
       description: "",
       progress: 0,
+      dueDate: new Date(),
       visible: false,
       rules:{
           lessThanOrEqualTo50Chars: value=>{
@@ -61,7 +63,8 @@ export default {
         id : this.task.id,
         title: this.title,
         description: this.description,
-        progress: this.progress
+        progress: this.progress,
+        dueDate: this.dueDate.getTime()
       });
       this.close();
     },
@@ -77,6 +80,7 @@ export default {
       this.title = newTask.title;
       this.progress = newTask.progress;
       this.description = newTask.description;
+      this.dueDate = new Date(newTask.dueDate);
     }
   }
 };
