@@ -31,6 +31,7 @@ export function newTask(parentId) {
     title: "new task",
     description: "description",
     progress: 1,
+    dueDate: new Date().getTime(),
     tasks: []
   }
   return task

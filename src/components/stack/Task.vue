@@ -1,5 +1,5 @@
 <template>
-  <div class="fullwidth">
+  <div >
     <v-container fluid grid-list-xl >
       <v-layout row  wrap class="taskitem" @dblclick="$emit('edit',task)" align-center  > 
         <v-flex xs1 >
@@ -10,8 +10,11 @@
             <v-icon >expand_more</v-icon>
           </v-btn>
         </v-flex>
-        <v-flex xs7 >
+        <v-flex xs5 >
           <span>{{ task.title }}</span>
+        </v-flex>
+        <v-flex xs2>
+          <span v-if="task.dueDate" v-bind:style="{color:task.dueDate <new Date().getTime()?'red':'green'}" ><span>Due </span><timeago  :datetime="task.dueDate" :autoUpdate="true"></timeago></span>
         </v-flex>
         <v-flex xs1 >
           <v-btn class="show-on-hover" icon ripple>

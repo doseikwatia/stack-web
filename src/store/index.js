@@ -27,6 +27,7 @@ export let store = new Vuex.Store({
       Vue.set(oldTask, 'title', task.title);
       Vue.set(oldTask, 'description', task.description);
       Vue.set(oldTask, 'progress', task.progress);
+      Vue.set(oldTask, 'dueDate', task.dueDate);
       alignTaskProgress(state.projects, projectID, task.id)
       state.hasChanges=true
     },
