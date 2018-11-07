@@ -2,7 +2,7 @@
     <v-list-tile @click="$emit('selected',project)"   @mouseover="showactions=true" @mouseleave="showactions=false" :to="{name:'TaskList',params:{projectID:project.id}}">
         <v-list-tile-title  >
             <span v-if="!edit" @dblclick="handleEditClicked">{{project.name}}</span>
-            <v-text-field v-else type="text" :value="project.name" required autofocus
+            <v-text-field v-else type="text" :value="project.name" required autofocus :rules="[lessThanOrEqualTo50Chars]"
                 @keyup.enter="handleEditClicked"  ref="inputField"></v-text-field>
         </v-list-tile-title>
         <v-list-tile-action v-show="showactions">
@@ -35,6 +35,11 @@ export default {
       edit: false,
       showactions: false,
       tmpProjectName:this.project.name,
+      rules:{
+          lessThanOrEqualTo50Chars: value=>{
+              return value.length > 50 ? "length should be less than or equal to 50":"";
+          },
+      }
     };
   },
   computed:{
