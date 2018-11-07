@@ -1,12 +1,11 @@
 <template>
-    <div>
-        <div>
-          
+    <v-layout column>
+        <v-flex v-if="project"><h1 align="center">{{project.name}}</h1></v-flex>
+        <v-flex>
             <task-item v-for="taskitem in tasklist" :task="taskitem" :key="taskitem.id" @edit="editTask" @add="addTask" @delete="deleteTask"></task-item>
-  
-        </div>
+        </v-flex>
         <task-editor :task="currentTask" @change="currentTaskChange" ref="taskEditor"></task-editor>
-    </div>
+    </v-layout>
 </template>
 <script>
 import Task from "./Task";
@@ -34,6 +33,9 @@ export default {
     },
     projectID: function() {
       return this.$route.params.projectID;
+    },
+    project: function() {
+      return this.$store.getters.getProject(this.$route.params.projectID)
     }
   },
   methods: {
